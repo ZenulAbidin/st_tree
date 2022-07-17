@@ -137,8 +137,12 @@ struct tree {
 
     typedef typename node_type::bf_iterator iterator;
     typedef typename node_type::const_bf_iterator const_iterator;
+    typedef typename node_type::bf_reverse_iterator reverse_iterator;
+    typedef typename node_type::const_bf_reverse_iterator const_reverse_iterator;
     typedef typename node_type::bf_iterator bf_iterator;
+    typedef typename node_type::bf_reverse_iterator bf_reverse_iterator;
     typedef typename node_type::const_bf_iterator const_bf_iterator;
+    typedef typename node_type::const_bf_reverse_iterator const_bf_reverse_iterator;
     typedef typename node_type::df_post_iterator df_post_iterator;
     typedef typename node_type::const_df_post_iterator const_df_post_iterator;
     typedef typename node_type::df_pre_iterator df_pre_iterator;
@@ -259,11 +263,19 @@ struct tree {
     iterator end() { return iterator(); }
     const_iterator begin() const { return const_iterator(_root); }
     const_iterator end() const { return const_iterator(); }
+    reverse_iterator rbegin() { return reverse_iterator(_root); }
+    reverse_iterator rend() { return reverse_iterator(); }
+    const_reverse_iterator rbegin() const { return const_reverse_iterator(_root); }
+    const_reverse_iterator rend() const { return const_reverse_iterator(); }
 
     bf_iterator bf_begin() { return bf_iterator(_root); }
     bf_iterator bf_end() { return bf_iterator(); }
     const_bf_iterator bf_begin() const { return const_bf_iterator(_root); }
     const_bf_iterator bf_end() const { return const_bf_iterator(); }
+    bf_reverse_iterator bf_rbegin() { return bf_reverse_iterator(_root); }
+    bf_reverse_iterator bf_rend() { return bf_reverse_iterator(); }
+    const_bf_reverse_iterator bf_rbegin() const { return const_bf_reverse_iterator(_root); }
+    const_bf_reverse_iterator bf_rend() const { return const_bf_reverse_iterator(); }
 
     df_post_iterator df_post_begin() { return df_post_iterator(_root); }
     df_post_iterator df_post_end() { return df_post_iterator(); }

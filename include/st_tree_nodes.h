@@ -58,6 +58,8 @@ struct node_base {
 
     typedef b1st_iterator<node_type, node_type, allocator_type> bf_iterator;
     typedef b1st_iterator<node_type, const node_type, allocator_type> const_bf_iterator;
+    typedef b1st_reverse_iterator<node_type, node_type, allocator_type> bf_reverse_iterator;
+    typedef b1st_reverse_iterator<node_type, const node_type, allocator_type> const_bf_reverse_iterator;
     typedef d1st_post_iterator<node_type, node_type, allocator_type> df_post_iterator;
     typedef d1st_post_iterator<node_type, const node_type, allocator_type> const_df_post_iterator;
     typedef d1st_pre_iterator<node_type, node_type, allocator_type> df_pre_iterator;
@@ -99,6 +101,8 @@ struct node_base {
         }
         return p;
     }
+
+    size_type children() const { return _children.size(); }
 
     tree_type& tree() {
         node_type* q = static_cast<node_type*>(this);

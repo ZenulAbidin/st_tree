@@ -92,6 +92,9 @@ int main(int argc, char** argv) {
 
         // subtree_size() is the size of the node's subtree
         cout << "   subtree_size= " << j->subtree_size();
+
+        // children() is the number of immediate children of the node
+        cout << "   children= " << j->children();
         cout << "\n";
     }
 

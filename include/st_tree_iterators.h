@@ -86,6 +86,91 @@ struct b1st_iterator {
 
 
 template <typename Node, typename Value, typename Alloc>
+struct b1st_reverse_iterator {
+    typedef Node node_type;
+    typedef typename Node::iterator iterator;
+
+    typedef std::forward_iterator_tag iterator_category;
+    typedef Value value_type;
+    typedef typename iterator::difference_type difference_type;
+    typedef Value* pointer;
+    typedef Value& reference;
+
+    b1st_reverse_iterator() : _queue() {}
+    virtual ~b1st_reverse_iterator() {}
+
+    b1st_reverse_iterator(const b1st_reverse_iterator& rhs) : _queue(rhs._queue) {}
+    b1st_reverse_iterator& operator=(const b1st_reverse_iterator& rhs) { _queue = rhs._queue; return *this; }
+
+protected:
+
+    template<typename T>
+    T flatten(T& __queue) {
+        T _queue2, _queue3 = __queue;
+        while (!_queue3.empty()) {
+            node_type* f(_queue3.back());
+            _queue3.pop_back();
+
+            for (iterator j(f->begin());  j != iterator(f->end());  ++j)
+                _queue2.push_front(&*j);
+        }
+        if (!_queue2.empty()) {
+            auto _queue4 = flatten(_queue2);
+            for (auto q: _queue4) {
+                _queue2.push_back(q);
+            }
+        }
+        return _queue2;
+    }
+
+public:
+
+    b1st_reverse_iterator(value_type* root) {
+        if (root == NULL) return;
+        _queue.push_front(const_cast<node_type*>(root));
+        auto _queue2 = flatten(_queue);
+        _queue = _queue2;
+        _queue.push_front(const_cast<node_type*>(root));
+        _queue2.clear();
+        for (int i = _queue.size()-1; i >= 0; i--) {
+            _queue2.push_back(_queue[i]);
+        }
+        _queue = _queue2;
+
+    }
+
+    reference operator*() const { return *(_queue.front()); }
+    pointer operator->() const { return _queue.front(); }
+
+    // pre-increment iterator
+    b1st_reverse_iterator operator++() {
+        // if we are already past the end of elements in tree, then this is a no-op
+        if (_queue.empty()) return *this;
+        
+        node_type* f(_queue.front());
+        _queue.pop_front();
+        
+
+        return *this;
+    }
+
+    // post-increment iterator
+    b1st_reverse_iterator operator++(int) {
+        b1st_reverse_iterator r(*this);
+        ++(*this);
+        return r;
+    }
+
+    bool operator==(const b1st_reverse_iterator& rhs) const { return _queue == rhs._queue; }
+    bool operator!=(const b1st_reverse_iterator& rhs) const { return _queue != rhs._queue; }
+
+    protected:
+    typedef typename std::allocator<node_type*> node_ptr_allocator_type;
+    deque<node_type*, node_ptr_allocator_type> _queue;
+};
+
+
+template <typename Node, typename Value, typename Alloc>
 struct d1st_post_iterator {
     typedef Node node_type;
     typedef typename node_type::iterator iterator;

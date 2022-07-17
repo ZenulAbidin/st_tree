@@ -50,6 +50,14 @@ int main(int argc, char** argv) {
     cout << "\ntree<>::bf_iterator\n";
     serialize_indented(t.bf_begin(), t.bf_end(), cout);
 
+    // tree<>::reverse_iterator is breadth-first iterator in reverse order
+    cout << "\ntree<>::reverse_iterator\n";
+    serialize_indented(t.rbegin(), t.rend(), cout);
+
+    // tree<>::bf_reverse_iterator is also breadth-first reverse
+    cout << "\ntree<>::bf_reverse_iterator\n";
+    serialize_indented(t.bf_rbegin(), t.bf_rend(), cout);
+
     // tree<>::df_pre_iterator is depth-first, pre order traversal
     cout << "\ntree<>::df_pre_iterator\n";
     serialize_indented(t.df_pre_begin(), t.df_pre_end(), cout);
